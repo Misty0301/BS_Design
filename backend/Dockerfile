@@ -6,6 +6,8 @@ WORKDIR /app
 
 # 复制依赖文件并安装依赖
 COPY package.json package-lock.json ./
+RUN apk add --no-cache python3 make g++ bash
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install --production
 
 # 复制所有源代码

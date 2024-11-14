@@ -1,14 +1,16 @@
 version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: jd_data
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "3000:3000"
-    depends_on:
-      - backend
+      - "3306:3306"
     networks:
       - app-network
 
@@ -18,10 +20,24 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000" # 根据后端实际端口调整
+    depends_on:
+      - db
     environment:
-      - NODE_ENV=production
-      - PORT=5000
-      # 添加其他环境变量，如数据库连接、API密钥等
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=123456
+      - DB_NAME=jd_data
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     networks:
       - app-network
 

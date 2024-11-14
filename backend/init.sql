@@ -1,3 +1,18 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    source_platform VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    link VARCHAR(5000) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 INSERT INTO products (product_name, source_platform, price, link) VALUES ('iphone16promax', 'JD', 9299, 'https://item.jd.com/100118874245.html'),
 ('iphone16promax', 'JD', 9249, 'https://item.jd.com/10117874871671.html'),
 ('iphone16promax', 'JD', 9499, 'https://item.jd.com/10117573775883.html'),

@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 // 使用中间件
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:3000', // 根据需要调整前端地址
+  origin: '*', // 根据需要调整前端地址
   methods: 'GET,POST,PUT,DELETE',
   credentials: true
 }));
@@ -332,6 +332,6 @@ app.post('/api/crawl', async (req, res) => {
 });
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
