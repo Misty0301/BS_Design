@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # 根据后端实际端口调整
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      # 添加其他环境变量，如数据库连接、API密钥等
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
